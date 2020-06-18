@@ -4,26 +4,31 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 public class Estudante {
 	// TODO Implementar a entidade Estudante conforme solicitado
+	/*
+	 * OBS.: por conta própria utilizei as anotações @NotBlank ao invés de @NotNull (solicitado no documento),
+	 *       porque o @NotNull deixa cadastrar valores em branco e o @NotBlank valida contra null, vazios e 
+	 *       obriga o campo a ter pelo menos 1 caracter não branco.
+	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	//@NotNull(message = "Nome é obrigatório")
-	@NotEmpty(message = "Nome é obrigatório")
+	@NotBlank(message = "Nome é obrigatório")
 	private String nome;
 
-	@NotNull(message = "Email é obrigatório")
+	@NotBlank(message = "Email é obrigatório")
+	@Email(message = "Email inválido")
 	private String email;
 
 	private String telefone;
 
-	@NotNull(message = "Matrícula é obrigatória")
+	@NotBlank(message = "Matrícula é obrigatória")
 	private String matricula;
 
 	private String curso;
@@ -31,11 +36,22 @@ public class Estudante {
 	public Estudante() {
 	}
 
-	public Estudante(Long id, @NotNull(message = "Nome é obrigatório") String nome,
-			@NotNull(message = "Email é obrigatório") String email, String telefone,
-			@NotNull(message = "Matrícula é obrigatória") String matricula, String curso) {
+	public Estudante(Long id, @NotBlank(message = "Nome é obrigatório") String nome,
+			@NotBlank(message = "Email é obrigatório") String email, String telefone,
+			@NotBlank(message = "Matrícula é obrigatória") String matricula, String curso) {
 		super();
 		this.id = id;
+		this.nome = nome;
+		this.email = email;
+		this.telefone = telefone;
+		this.matricula = matricula;
+		this.curso = curso;
+	}
+
+	public Estudante(@NotBlank(message = "Nome é obrigatório") String nome,
+			@NotBlank(message = "Email é obrigatório") @Email(message = "Email inválido") String email, String telefone,
+			@NotBlank(message = "Matrícula é obrigatória") String matricula, String curso) {
+		super();
 		this.nome = nome;
 		this.email = email;
 		this.telefone = telefone;

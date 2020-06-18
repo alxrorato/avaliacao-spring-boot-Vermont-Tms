@@ -1,0 +1,28 @@
+Candidato: Alexandre Rorato Carneiro
+
+Observação:
+
+1) Não tenho domínio de Themeleaf e por isso não implementei as solicitações referente a front-end.
+
+2) Criei um tratamento para erros referente ao validation dos atributos da classe estudante,
+   para estudante não encontrado quando poesquisado por um id não existente, e
+   para estudante pesquisado com o id zerado.
+   Motivo: gerar uma saída com visualização mais fácil. 
+
+3) Criei 2 outros métodos de GET que não foram solicitados: 
+	- Retorno de lista de estudantes com nomes exatamente iguais ao informado no parâmetro de pesquisa.
+	- Retorno de lista de estudantes que contenham a string informada no parâmetro de pesquisa.
+
+4) Alterei o retorno do método cadastrarEstudante na classe de serviço de "void" para "Estudante" com o
+   objetivo de fazer que o conteúdo inserido via POST seja exibido após concluir a transação.
+
+5) Modificação no tratamento da exceção para id inválido, substituindo o "throw new IllegalArgumentException"
+   pela chamada "throw new EstudanteInvalidIdException", pois com o 1o. throw seria retornado 
+   "Internal Server Error", que seria muito genérico. A chamada do 2o. throw retornará um BAD_REQUEST, que é
+   um código mais adequado como resposta.
+   Considerei ids como inválidos se <= 0.
+
+6) Criei 2 classes de Testes Unitários: EstudanteRepositoryTest e EstudanteRestControllerTest, para testes de
+   repositório e controller, respectivamente, apesar disso não ter sido solicitado.
+   Não abrange todos os testes possíveis, incluí testes para apenas algumas situações.
+	- EstudanteRepositoryTest: testes unitários 

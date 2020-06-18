@@ -2,7 +2,6 @@ package br.com.tokiomarine.seguradora.avaliacao.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -10,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.tokiomarine.seguradora.avaliacao.entidade.Estudante;
+import br.com.tokiomarine.seguradora.avaliacao.error.EstudanteInvalidIdException;
 import br.com.tokiomarine.seguradora.avaliacao.error.EstudanteNotFoundException;
 import br.com.tokiomarine.seguradora.avaliacao.repository.EstudanteRepository;
 
@@ -51,9 +51,7 @@ public class EstudanteServiceImpl implements EstudanteService {
 
 	@Override
 	public Estudante buscarEstudante(long id) {
-		if (id == 0) {
-			throw new IllegalArgumentException("Identificador inválido:" + id);
-		}
+		//throw new IllegalArgumentException("Identificador inválido:" + id);
 		verificaSeEstudanteExiste(id);
 		return estudanteDAO.findById(id).get();
 	}
@@ -80,6 +78,9 @@ public class EstudanteServiceImpl implements EstudanteService {
 	}
 
 	private void verificaSeEstudanteExiste(Long id) {
+		if (id <= 0) {
+			throw new EstudanteInvalidIdException("Identificador inválido:" + id);
+		}
 		if (!estudanteExiste(id))
 			throw new EstudanteNotFoundException("Estudante não encontrado para o ID: " + id);
 	}
